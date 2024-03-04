@@ -12,7 +12,7 @@ Don't forget set .env file if required!
 
 ### Run
 
-`uvicorn app.main:app --reload --port 5000`
+`uvicorn requestPoc:app --reload --port 5000`
 
 ### Tests
 
