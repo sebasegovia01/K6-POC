@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException
 import requests
+from mangum import Mangum
 
 app = FastAPI()
 
 
 async def fetch_cat_fact():
+    print('calling fetch_cat_fact')
     get_url = "https://catfact.ninja/fact"
     get_response = requests.get(get_url)
     if get_response.status_code == 200:
@@ -14,6 +16,7 @@ async def fetch_cat_fact():
     
 @app.get("/get-cat-fact")
 async def get_cat_fact():
+    print('calling get_cat_fact')
     url = "https://catfact.ninja/fact"
     
     response = requests.get(url)
@@ -24,6 +27,7 @@ async def get_cat_fact():
         return {"error": "Failed to retrieve cat fact", "status_code": response.status_code}
 @app.post("/post-cat-fact")
 async def post_cat_fact():
+    print('calling post_cat_fact')
     post_url = "https://webhook-test.com/46b1d4bded6628fd3d3e036c520360da"
     headers={
         "Content-type": "application/json"
@@ -37,6 +41,7 @@ async def post_cat_fact():
 
 @app.put("/put-cat-fact")
 async def put_cat_fact():
+    print('calling put_cat_fact')
     put_url = "https://webhook-test.com/46b1d4bded6628fd3d3e036c520360da"
     headers={
         "Content-type": "application/json"
@@ -48,3 +53,5 @@ async def put_cat_fact():
     else:
         return HTTPException(status_code=put_response.status_code, detail="Failed to update cat fact")
     
+
+handler = Mangum(app)

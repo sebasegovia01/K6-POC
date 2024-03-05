@@ -1,8 +1,8 @@
-# Utiliza la imagen base de Python 3.10 sobre Alpine
-FROM python:3.10-alpine
+# Utiliza la imagen base de Python proporcionada por AWS para Lambda
+FROM public.ecr.aws/lambda/python:3.10
 
 # Establece el directorio de trabajo en el contenedor
-WORKDIR /app
+WORKDIR ${LAMBDA_TASK_ROOT}
 
 # Copia el archivo requirements.txt en el contenedor
 COPY requirements.txt .
@@ -13,8 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia el resto de los archivos del proyecto en el contenedor
 COPY . .
 
-# Expone el puerto 5000
-EXPOSE 5000
+# Instala Mangum para adaptar ASGI a Lambda
+RUN pip install mangum
 
-# Comando para ejecutar la aplicación usando Uvicorn
-CMD ["uvicorn", "requestPoc:app", "--host", "0.0.0.0", "--port", "5000"]
+# Define la función handler para Lambda (asumiendo que `requestPoc.handlerp` es tu aplicación FastAPI)
+CMD ["requestPoc.handler"]
