@@ -1,5 +1,5 @@
-# Utiliza la imagen base de Python 3.10.13
-FROM python:3.10.13
+# Utiliza la imagen base de Python 3.10 sobre Alpine
+FROM python:3.10-alpine
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /app
